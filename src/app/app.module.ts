@@ -14,6 +14,8 @@ import { NgxsModule } from '@ngxs/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { SpeciesListComponent } from './core/components/species-list/species-list.component';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -26,9 +28,9 @@ import { AppComponent } from './app.component';
       developmentMode: isDevMode(),
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-
     LayoutComponent,
     DummyComponent,
+    SpeciesListComponent
   ],
   providers: [AuthInterceptorProvider, AuthService, TrainerService],
   bootstrap: [AppComponent],

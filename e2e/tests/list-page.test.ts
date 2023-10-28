@@ -5,7 +5,7 @@ describe('List page', () => {
   beforeAll(fakeLogin);
 
   it('is plugged to the API and displays text data', async () => {
-    void page.goto(environment.appUrl);
+    void page.goto(environment.appUrl + '/species');
 
     const response = await hijackSpeciesResponse<SpeciesShort[]>(
       'GET',
@@ -20,7 +20,7 @@ describe('List page', () => {
   });
 
   it('displays species images', async () => {
-    void page.goto(environment.appUrl);
+    void page.goto(environment.appUrl + '/species');
 
     const response = await hijackSpeciesResponse<SpeciesShort[]>(
       'GET',
