@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Reset pokedex</h1>
+<div mat-dialog-content>
+  <p>
+    This will <strong>permanently forget all species</strong> you have discovered. Are you <em>really</em> sure you want
+    to do this?
+  </p>
+</div>
+
+<div
+  mat-dialog-actions
+  class="dialog-actions"
+>
+  <ng-container *ngIf="!isLoading; else ActionsLoading">
+    <button
+      mat-flat-button
+      mat-dialog-close
+    >
+      Cancel
+    </button>
+    <button
+      mat-flat-button
+      color="warn"
+      (click)="confirmReset()"
+    >
+      Yes, reset pokedex
+    </button>
+  </ng-container>
+
+  <ng-template #ActionsLoading>
+    <mat-spinner [diameter]="24"></mat-spinner>
+  </ng-template>
+</div>
