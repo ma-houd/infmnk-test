@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { SpeciesListComponent } from './core/components/species-list/species-list.component';
+import { SpeciesDetailsComponent } from './core/components/species-details/species-details.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +31,8 @@ import { SpeciesListComponent } from './core/components/species-list/species-lis
     NgxsReduxDevtoolsPluginModule.forRoot(),
     LayoutComponent,
     DummyComponent,
-    SpeciesListComponent
+    SpeciesListComponent,
+    SpeciesDetailsComponent
   ],
   providers: [AuthInterceptorProvider, AuthService, TrainerService],
   bootstrap: [AppComponent],

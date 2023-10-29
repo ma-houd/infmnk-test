@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { SpeciesFullModel } from '@core/models/speciesFull.model';
 import { SpeciesShortModel } from '@core/models/speciesShort.model';
 import { environment } from '@environment';
 import { BehaviorSubject, Observable, map } from 'rxjs';
@@ -14,7 +15,13 @@ export class SpeciesService {
   constructor() { }
 
   public getAllSpecies$(): Observable<SpeciesShortModel[]> {
-    return this.httpClient.get(environment.apiUrl + '/species').pipe(
+    return this.httpClient.get<SpeciesShortModel[]>(environment.apiUrl + '/species').pipe(
+      map((species: any) => species.data)
+    );
+  }
+
+  public getASpeciesById$(id : number): Observable<SpeciesFullModel> {
+    return this.httpClient.get<SpeciesFullModel>(environment.apiUrl + '/species/' + id).pipe(
       map((species: any) => species.data)
     );
   }

@@ -4,8 +4,6 @@ import { DummyComponent } from '@core/components/dummy/dummy.component';
 import { LoginPageComponent } from '@modules/login/components/login-page/login-page.component';
 import { LoginModule } from '@modules/login/login.module';
 
-import { SpeciesListComponent } from './core/components/species-list/species-list.component';
-
 const routes: Routes = [
   {
     path: '',
@@ -18,7 +16,16 @@ const routes: Routes = [
   },
   {
     path: 'species',
-    loadComponent: () => import('./core/components/species-list/species-list.component').then(mod => mod.SpeciesListComponent)
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./core/components/species-list/species-list.component').then(mod => mod.SpeciesListComponent)
+      },
+      {
+        path: ':id',
+        loadComponent: () => import('./core/components/species-details/species-details.component').then(mod => mod.SpeciesDetailsComponent)
+      },
+    ]
   },
 ];
 

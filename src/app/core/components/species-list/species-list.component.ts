@@ -12,6 +12,7 @@ import { SpeciesService } from '@core/services/species.service';
 import { Observable, switchMap } from 'rxjs';
 
 import { IdentifySpeciesDialogComponent } from '../identify-species-dialog/identify-species-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-species-list',
@@ -24,6 +25,7 @@ export class SpeciesListComponent implements OnInit {
   private speciesService = inject(SpeciesService);
   private destroyRef = inject(DestroyRef);
   public dialogRef = inject(MatDialog);
+  private router = inject(Router);
 
   public species$!: Observable<SpeciesShortModel[]>;
   public displayedColumns: string[] = ['id', 'name', 'image'];
@@ -47,5 +49,9 @@ export class SpeciesListComponent implements OnInit {
     this.speciesService.resetList()
     .pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe(() => this.speciesService.refreshSpeciesList$.next());
+  }
+
+  public redirectToDetails(evt: any): void {
+    this.router.navigateByUrl('species/' + evt.id);
   }
 }
