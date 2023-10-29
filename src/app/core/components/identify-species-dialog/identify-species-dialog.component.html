@@ -1,0 +1,12 @@
+<form [formGroup]="identificationFormGroup">
+    <div mat-dialog-header>
+        <button mat-button mat-dialog-close>x</button>
+    </div>
+    <div mat-dialog-content>
+        <input type="file" name="file" (change)="onFileChange($event)">
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button>Cancel</button>
+        <button mat-button [mat-dialog-close]="true" [disabled]="identificationFormGroup.invalid" (click)="identifyASpecies$()">Save</button>
+    </div> 
+</form>

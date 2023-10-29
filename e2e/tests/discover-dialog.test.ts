@@ -7,7 +7,7 @@ describe('Discover dialog', () => {
   beforeAll(fakeLogin);
 
   it('can be opened with a button and has button to close it', async () => {
-    await page.goto(environment.appUrl);
+    await page.goto(environment.appUrl + '/species');
 
     await openTheDialog();
 
@@ -25,7 +25,7 @@ describe('Discover dialog', () => {
   it('can submit an image', async () => {
     const filePath = path.resolve('e2e/assets/pikachu.jpg');
 
-    await page.goto(environment.appUrl);
+    await page.goto(environment.appUrl + '/species');
 
     await openTheDialog();
     await sleep(500);

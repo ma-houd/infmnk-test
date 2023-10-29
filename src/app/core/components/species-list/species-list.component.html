@@ -1,3 +1,5 @@
+<button mat-raised-button color="primary" (click)="openIdentifyDialog()">Identify a species</button>
+<button mat-raised-button color="secondary" (click)="resetList()">Reset</button>
 
 <ng-container *ngIf="species$|async as species">
     <table mat-table [dataSource]="species">
