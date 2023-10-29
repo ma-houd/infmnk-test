@@ -4,22 +4,25 @@ import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 
+import { Router } from '@angular/router';
 import { SpeciesShortModel } from '@core/models/speciesShort.model';
 
+import { CapitalizePipe } from '@core/pipes/capitalize.pipe';
 import { SpeciesService } from '@core/services/species.service';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, debounceTime, switchMap } from 'rxjs';
 
 import { IdentifySpeciesDialogComponent } from '../identify-species-dialog/identify-species-dialog.component';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-species-list',
   templateUrl: './species-list.component.html',
   styleUrls: ['./species-list.component.scss'],
   standalone: true,
-  imports: [ CommonModule, MatTableModule, MatButtonModule ],
+  imports: [ CommonModule, MatTableModule, MatButtonModule, MatFormFieldModule, MatInputModule, CapitalizePipe ],
 })
 export class SpeciesListComponent implements OnInit {
   private speciesService = inject(SpeciesService);
@@ -30,14 +33,21 @@ export class SpeciesListComponent implements OnInit {
   public species$!: Observable<SpeciesShortModel[]>;
   public displayedColumns: string[] = ['id', 'name', 'image'];
 
+  public searchStr = '';
 
   public ngOnInit(): void {
-    this.species$ = this.getAllSpeciesList$();
+    this.species$ = this.getAllSpeciesList$();  
+  }
+  
+  public searchOnList(evt: any): void {
+    this.searchStr = evt.target.value;
+    this.speciesService.refreshSpeciesList$.next();
   }
 
   private getAllSpeciesList$(): Observable<SpeciesShortModel[]> {
     return this.speciesService.refreshSpeciesList$.pipe(
-      switchMap(() => this.speciesService.getAllSpecies$())
+      debounceTime(500),
+      switchMap(() => this.speciesService.getAllSpecies$(this.searchStr)),
     );
   }
 

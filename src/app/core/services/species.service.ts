@@ -14,8 +14,14 @@ export class SpeciesService {
 
   constructor() { }
 
-  public getAllSpecies$(): Observable<SpeciesShortModel[]> {
-    return this.httpClient.get<SpeciesShortModel[]>(environment.apiUrl + '/species').pipe(
+  public getAllSpecies$(search: string): Observable<SpeciesShortModel[]> {
+    let url = environment.apiUrl + '/species';
+
+    if (search.length >= 3) {
+      url += '?search=' + search;
+    }
+    
+    return this.httpClient.get<SpeciesShortModel[]>(url).pipe(
       map((species: any) => species.data)
     );
   }
